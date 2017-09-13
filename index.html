@@ -20,12 +20,172 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
+
+		<style type="text/css">
+			.fragment.current-visible.visible:not(.current-fragment) {
+				display: none;
+				height:0px;
+				line-height: 0px;
+				font-size: 0px;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h2>Today's agenda</h2>
+					<ul>
+						<li>A Bit of Theory</li>
+						<li>Demo Project</li>
+						<li>Learnings & Outlook</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Motivation</h2>
+					<section>
+						<p class="fragment">Javascript is nice</p>
+						<p class="fragment">But Kotlin is nicer</p>
+					</section>
+					<section>
+						<p>Javascript community:</p>
+						<blockquote class="fragment">Use the same language in the frontend and the backend (with node.js).</blockquote>
+					</section>
+					<section>
+						<p>(Future) Kotlin community:</p>
+						<blockquote>Let's do the same!</blockquote>
+						<blockquote class="fragment">And also add native support!</blockquote>
+					</section>
+					<section>
+						<ul>
+							<li class="fragment">Common programming language</li>
+							<li class="fragment">Share code
+								<ul>
+									<li class="fragment">Structures like DTOs</li>
+									<li class="fragment">Business or Domain Logic</li>
+									<li class="fragment">Libraries</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<h2>Kotlin & JS</h2>
+					<section>
+						<p class="fragment">Core: Transpiler & Tooling</p>
+					</section>
+					<section>
+						<h4>Transpiling</h4>
+						<div class="fragment">
+							<p>Kotlin:</p>
+							<pre><code>
+fun main(args: Array&lt;String&gt;) = println("Hi Kotlin Vienna!")
+							</code></pre>
+						</div>
+						<div class="fragment">
+							<p>Javascript:</p>
+							<pre><code>
+function main(args) {
+    console.log('Hi Kotlin Vienna!')
+}
+							</code></pre>
+						</div>
+					</section>
+					<section>
+						<h3>How does it work in reality?</h3>
+						<ul>
+							<li class="fragment">kotlin.js</li>
+							<li class="fragment">Gradle Plugin</li>
+							<li class="fragment">Integration into Webpack</li>
+						</ul>
+					</section>
+					<section>
+						<p>Calling Javascript functions from Kotlin</p>
+						<pre class="fragment"><code>
+js("console.log(3+4)")
+						</code></pre>
+					</section>
+					<section>
+						<h3>Defining JavaScript structures</h3>
+						<pre class="fragment current-visible"><code>
+external class Window {
+	fun alert(message: String): Unit
+}
+
+external val window: Window
+						</code></pre>
+						<pre class="fragment"><code>
+external class Window {
+	fun alert(message: String): Unit
+}
+
+external val window: Window
+
+external fun unknownReturnType(): dynamic
+						</code></pre>
+					</section>
+					<section>
+						<h3>Dynamic examples</h3>
+						<pre class="fragment"><code>
+val dyn: dynamic = unknownReturnType()
+						</code></pre>
+						<pre class="fragment"><code>
+dyn.whatever(123)
+						</code></pre>
+						<pre class="fragment"><code>
+dyn.foo.bar[4].whatever(123)
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<h2>Calling Kotlin from JS</h2>
+					<pre class="fragment"><code>
+fun foo(person: String) = "Hi $person"
+					</code></pre>
+					<pre class="fragment"><code>
+console.log(MyModule.foo('Martin'));
+					</code></pre>
+					<pre class="fragment"><code>
+console.log(require('myModule').foo('Martin'));
+					</code></pre>
+					<p class="fragment">@JSName for explicit naming</p>
+				</section>
+				<section>
+					<h2>Reflection</h2>
+					<p class="fragment">Very limited</p>
+					<p class="fragment">Just "simpleName" and "isInstance"</p>
+					<p class="fragment">No annotation support!</p>
+				</section>
+				<section>
+					<h1>Demo Time!</h1>
+				</section>
+				<section>
+					<h2>Next steps</h2>
+					<ul>
+						<li class="fragment">
+							Framework support: Not yet
+							<ul>
+								<li class="fragment">Manual header creation</li>
+								<li class="fragment"><a href="https://github.com/Kotlin/ts2kt">ts2kt</a></li>
+							</ul>
+						</li>
+						<li class="fragment">CSS support: <a href="https://github.com/olegcherr/Aza-Kotlin-CSS">In progress</a></li>
+					</ul>
+				</section>
+				<section>
+					<h2>Conclusion</h2>
+					<section>
+						<p class="fragment">Architecture is right but not implemented (yet).</p>
+						<p class="fragment">Documentation for language support is good.</p>
+						<p class="fragment">Documentation for tooling isn't.</p>
+					</section>
+					<section>
+						<p style="color: #ff2c2d;">Don't migrate (yet)!</p>
+						<p class="fragment" style="color: #ff2c2d;">Don't use in production!</p>
+						<p class="fragment">But try it in your next pet project!</p>
+						<p class="fragment"><a href="http://slack.kotlinlang.org/">Slack</a> channels: #javascript & #multiplattform</p>
+					</section>
+				</section>
 			</div>
 		</div>
 
